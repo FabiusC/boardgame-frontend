@@ -1,0 +1,80 @@
+/* index.css */
+
+/* Light Mode */
+:root {
+  --bg-color: #F4EBD0;
+  --primary-color: #8C6D43;
+  --secondary-color: #C8A97E;
+  --accent-color: #D97904;
+  --text-color: #2F2D2E;
+  --highlight-color: #E9C46A;
+  --error-color: #B33A3A;
+
+  /* Font Settings */
+  --font-family: 'Cabin', sans-serif;
+  --font-size: 16px;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  --bg-color: #2F2D2E;
+  --primary-color: #C8A97E;
+  --secondary-color: #8C6D43;
+  --accent-color: #D97904;
+  --text-color: #F4EBD0;
+  --highlight-color: #E9C46A;
+  --error-color: #E05C5C;
+}
+
+/* Global Styles */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--primary-color);
+  font-weight: var(--font-weight-bold);
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--highlight-color);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+  background-color: var(--accent-color);
+}
+
+.error-text {
+  color: var(--error-color);
+  font-weight: var(--font-weight-bold);
+}

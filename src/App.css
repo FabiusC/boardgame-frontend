@@ -1,0 +1,45 @@
+.App {
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.theme-toggle {
+    text-align: center;
+    margin: 20px;
+    color: var(--text-color);
+    font-family: var(--font-family);
+    font-size: 1rem;
+}
+
+.theme-toggle input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+    accent-color: var(--accent-color);
+}
+
+.theme-toggle label {
+    cursor: pointer;
+}
+
+.game-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+}
+
+.game-list::-webkit-scrollbar {
+    display: none;
+}
+
+/* Dark Mode */
+body.dark-mode .App {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+body.dark-mode .theme-toggle {
+    color: var(--text-color);
+}

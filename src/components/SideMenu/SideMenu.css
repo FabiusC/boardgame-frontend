@@ -1,0 +1,64 @@
+.side-menu {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background-color: var(--bg-color);
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    transition: left 0.3s ease;
+    z-index: 100;
+    border-right: 2px solid var(--primary-color);
+}
+
+.side-menu.open {
+    left: 0;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 30px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    transition: color 0.3s;
+}
+
+.close-button:hover {
+    color: var(--accent-color);
+}
+
+.side-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.side-menu ul li {
+    padding: 10px 0;
+    color: var(--text-color);
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-normal);
+    cursor: pointer;
+    transition: color 0.3s;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.side-menu ul li:hover {
+    color: var(--accent-color);
+}
+
+.side-menu ul li:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 600px) {
+    .side-menu {
+        width: 80%;
+    }
+}
