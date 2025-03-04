@@ -8,7 +8,7 @@
   --accent-color: #D97904;
   --text-color: #2F2D2E;
   --highlight-color: #E9C46A;
-  --error-color: #B33A3A;
+  --warning-color: #B33A3A;
 
   /* Font Settings */
   --font-family: 'Cabin', sans-serif;
@@ -25,7 +25,7 @@ body.dark-mode {
   --accent-color: #D97904;
   --text-color: #F4EBD0;
   --highlight-color: #E9C46A;
-  --error-color: #E05C5C;
+  --warning-color: #E05C5C;
 }
 
 /* Global Styles */
@@ -75,6 +75,6 @@ button:hover {
 }
 
 .error-text {
-  color: var(--error-color);
+  color: var(--warning-color);
   font-weight: var(--font-weight-bold);
 }

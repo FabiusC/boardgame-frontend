@@ -30,7 +30,7 @@
 }
 
 .close-button:hover {
-    color: var(--accent-color);
+    color: var(--text-color);
 }
 
 .side-menu ul {

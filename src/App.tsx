@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header/Header';
 import SideMenu from './components/SideMenu/SideMenu';
 import GameCard from './components/GameCard/GameCard';
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 import './App.css';
 
 interface Game {
@@ -41,19 +44,31 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="App">
-      <Header 
-        toggleMenu={() => setIsMenuOpen(!isMenuOpen)}
-        darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
-      />
-      <SideMenu isOpen={isMenuOpen} toggleMenu={() => setIsMenuOpen(!isMenuOpen)} />
-      <div className="game-list">
-        {games.map((game) => (
-          <GameCard key={game.id} name={game.name} image={game.image} />
-        ))}
+    <Router>
+      <div className="App">
+        <Header 
+          toggleMenu={() => setIsMenuOpen(!isMenuOpen)}
+          darkMode={darkMode}
+          toggleDarkMode={toggleDarkMode}
+        />
+        <SideMenu isOpen={isMenuOpen} toggleMenu={() => setIsMenuOpen(!isMenuOpen)} />
+        
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <div className="game-list">
+                {games.map((game) => (
+                  <GameCard key={game.id} name={game.name} image={game.image} />
+                ))}
+              </div>
+            } 
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 };
 

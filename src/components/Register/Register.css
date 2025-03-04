@@ -1,0 +1,229 @@
+.register-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.register-title {
+    color: var(--primary-color);
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 20px;
+}
+
+.selected-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid var(--accent-color);
+    margin: 0 auto 20px;
+    transition: transform 0.3s;
+}
+
+.selected-avatar:hover {
+    transform: scale(1.1);
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.register-input {
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    min-width: 70%;
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    outline: none;
+    transition: border 0.3s;
+}
+
+.register-input:focus {
+    border-color: var(--accent-color);
+}
+
+.error-text {
+    color: var(--warning-color);
+    font-size: 0.9rem;
+    text-align: left;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+.password-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+.toggle-password:hover {
+    color: var(--accent-color);
+}
+
+.register-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-button:hover {
+    background-color: var(--accent-color);
+}
+
+.avatar-selection {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.avatar-selection h4 {
+    color: var(--primary-color);
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 10px;
+}
+
+.avatars {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.avatar:hover {
+    transform: scale(1.1);
+    border-color: var(--accent-color);
+}
+
+.avatar.selected {
+    border-color: var(--highlight-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark Mode */
+body.dark-mode .register-container {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--primary-color);
+}
+
+body.dark-mode .register-input {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--secondary-color);
+}
+
+body.dark-mode .toggle-password {
+    color: var(--text-color);
+}
+
+body.dark-mode .toggle-password:hover {
+    color: var(--highlight-color);
+}
+
+body.dark-mode .register-button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+body.dark-mode .register-button:hover {
+    background-color: var(--highlight-color);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .register-container {
+        padding: 15px;
+        width: 90%;
+    }
+
+    .selected-avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+.selected-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid var(--accent-color);
+    margin: 0 auto 20px;
+    transition: transform 0.3s, opacity 0.3s;
+    opacity: 1;
+}
+
+.selected-avatar:hover {
+    transform: scale(1.1);
+}
+
+.avatar {
+    transition: transform 0.2s, border 0.2s;
+}
+
+.avatar:hover {
+    transform: scale(1.1);
+}
+
+.avatar.selected {
+    border: 3px solid var(--highlight-color);
+    transform: scale(1.2);
+}
+
+.error-text {
+    color: var(--warning-color);
+    font-size: 0.9rem;
+    text-align: center;
+    display: block;
+    margin-top: 5px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
