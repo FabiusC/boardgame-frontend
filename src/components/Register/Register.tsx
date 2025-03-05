@@ -2,68 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
-// Importing all SVG avatars from the folder
-import antelope from "../../assets/animals/antelope.svg";
-import bear from "../../assets/animals/bear.svg";
-import beaver from "../../assets/animals/beaver.svg";
-import bull from "../../assets/animals/bull.svg";
-import catGrey from "../../assets/animals/cat-grey.svg";
-import catOrange from "../../assets/animals/cat-orange.svg";
-import chipmunk from "../../assets/animals/chipmunk.svg";
-import cow from "../../assets/animals/cow.svg";
-import deer from "../../assets/animals/deer.svg";
-import donkey from "../../assets/animals/donkey.svg";
-import duck from "../../assets/animals/duck.svg";
-import giraffe from "../../assets/animals/giraffe.svg";
-import goat from "../../assets/animals/goat.svg";
-import goose from "../../assets/animals/goose.svg";
-import hare from "../../assets/animals/hare.svg";
-import horse from "../../assets/animals/horse.svg";
-import kangaroo from "../../assets/animals/kangaroo.svg";
-import leopard from "../../assets/animals/leopard.svg";
-import lizard from "../../assets/animals/lizard.svg";
-import moose from "../../assets/animals/moose.svg";
-import ox from "../../assets/animals/ox.svg";
-import pegasus from "../../assets/animals/pegasus.svg";
-import pig from "../../assets/animals/pig.svg";
-import raccoon from "../../assets/animals/raccoon.svg";
-import ram from "../../assets/animals/ram.svg";
-import sheep from "../../assets/animals/sheep.svg";
-import unicorn from "../../assets/animals/unicorn.svg";
-import wolf from "../../assets/animals/wolf.svg";
-import zebra from "../../assets/animals/zebra.svg";
-
-const avatars = [
-  antelope,
-  bear,
-  beaver,
-  bull,
-  catGrey,
-  catOrange,
-  chipmunk,
-  cow,
-  deer,
-  donkey,
-  duck,
-  giraffe,
-  goat,
-  goose,
-  hare,
-  horse,
-  kangaroo,
-  leopard,
-  lizard,
-  moose,
-  ox,
-  pegasus,
-  pig,
-  raccoon,
-  ram,
-  sheep,
-  unicorn,
-  wolf,
-  zebra,
-];
+import { avatars } from "../../constants/avatars";
 
 const Register: React.FC = () => {
   const [name, setName] = useState("");
@@ -75,11 +14,16 @@ const Register: React.FC = () => {
   const [passwordError, setPasswordError] = useState("");
   const [passwordMatchError, setPasswordMatchError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isCodeSent, setIsCodeSent] = useState(false);
+  const [userEnteredCode, setUserEnteredCode] = useState("");
+  const [verificationError, setVerificationError] = useState("");
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // Handle Registration Request
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       setPasswordMatchError("Passwords do not match.");
       return;
@@ -94,10 +38,63 @@ const Register: React.FC = () => {
       alert("Password does not meet security requirements");
       return;
     }
-    console.log("Registering:", { name, email, password, selectedAvatar });
-    navigate("/login");
+
+    try {
+      // Send verification code request
+      const response = await fetch(
+        "http://localhost:5000/api/users/send-code",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+            icon: selectedAvatar, // Make sure the key name matches the backend
+          }),
+        }
+      );
+
+      const data = await response.json(); // Parse API response
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send verification code.");
+      }
+      // Change Alert TODO
+      alert("A verification code has been sent to your email.");
+      setIsCodeSent(true);
+    } catch (error) {
+      console.error("Error sending verification code:", error);
+    }
   };
 
+  // Handle Verification Code
+  const handleVerifyCode = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/users/verify-code",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, code: userEnteredCode }),
+        }
+      );
+
+      const data = await response.json(); // Parse response
+
+      if (!response.ok) {
+        throw new Error(data.error || "Verification failed.");
+      }
+
+      alert("Email verified successfully! You can now log in.");
+      navigate("/login");
+    } catch (error) {
+      setVerificationError((error as Error).message); // Show error to user
+      console.error("Error verifying code:", error);
+    }
+  };
+
+  // Validate Inputs with REGEX
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const isValid = emailRegex.test(email);
@@ -117,6 +114,7 @@ const Register: React.FC = () => {
     return isValid;
   };
 
+  // Functions for GUI
   const handleAvatarSelect = (avatar: string) => {
     setSelectedAvatar(avatar);
   };
@@ -141,86 +139,109 @@ const Register: React.FC = () => {
         />
       )}
 
-      <form className="register-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="register-input"
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onBlur={() => validateEmail(email)}
-          className="register-input"
-          required
-        />
-        {emailError && <span className="error-text">{emailError}</span>}
-
-        <div className="password-input">
+      {!isCodeSent ? (
+        <form className="register-form" onSubmit={handleSubmit}>
           <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onBlur={() => validatePassword(password)}
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="register-input"
             required
           />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={() => validateEmail(email)}
+            className="register-input"
+            required
+          />
+          {emailError && <span className="error-text">{emailError}</span>}
+
+          <div className="password-input">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onBlur={() => validatePassword(password)}
+              className="register-input"
+              required
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={toggleShowPassword}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
+          {passwordError && <span className="error-text">{passwordError}</span>}
+
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="register-input"
+            required
+          />
+          {passwordMatchError && (
+            <span className="error-text">{passwordMatchError}</span>
+          )}
+
+          <div className="avatar-selection">
+            <h4>Select Your Avatar</h4>
+            <div className="avatars">
+              {avatars.map((avatar, index) => (
+                <img
+                  key={index}
+                  src={avatar.url}
+                  alt={avatar.name}
+                  className={`avatar ${selectedAvatar === avatar.url ? "selected" : ""}`}
+                  onClick={() => handleAvatarSelect(avatar.url)}
+                />
+              ))}
+            </div>
+          </div>
+
+          <button type="submit" className="register-button">
+            Send Verification Code
+          </button>
+        </form>
+      ) : (
+        <div className="verification-container">
+          <h4>Enter Verification Code</h4>
+          <input
+            type="text"
+            placeholder="_ _ _ _ _ _"
+            value={userEnteredCode}
+            onChange={(e) => setUserEnteredCode(e.target.value)}
+            className="verification-input"
+            required
+          />
+          {verificationError && (
+            <span className="error-text">{verificationError}</span>
+          )}
           <button
             type="button"
-            className="toggle-password"
-            onClick={toggleShowPassword}
+            className="verify-button"
+            onClick={handleVerifyCode}
           >
-            {showPassword ? "🙈" : "👁️"}
+            Verify Code
           </button>
         </div>
-        {passwordError && <span className="error-text">{passwordError}</span>}
+      )}
 
-        <input
-          type={showPassword ? "text" : "password"}
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="register-input"
-          required
-        />
-        {passwordMatchError && (
-          <span className="error-text">{passwordMatchError}</span>
-        )}
-
-        <div className="avatar-selection">
-          <h4>Select Your Avatar</h4>
-          <div className="avatars">
-            {avatars.map((avatar, index) => (
-              <img
-                key={index}
-                src={avatar}
-                alt="Avatar"
-                className={`avatar ${
-                  selectedAvatar === avatar ? "selected" : ""
-                }`}
-                onClick={() => handleAvatarSelect(avatar)}
-              />
-            ))}
-          </div>
-        </div>
-
-        <button type="submit" className="register-button">
-          Sign Up
-        </button>
-        <button
-          type="button"
-          className="back-button"
-          onClick={handleBackToLogin}
-        >
-          Back to Login
-        </button>
-      </form>
+      <button
+        type="button"
+        className="register-button"
+        onClick={handleBackToLogin}
+      >
+        Back to Login
+      </button>
     </div>
   );
 };

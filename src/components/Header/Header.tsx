@@ -20,12 +20,22 @@ const Header: React.FC<HeaderProps> = ({
     navigate("/login");
   };
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <header className="header">
       <button className="hamburger" onClick={toggleMenu}>
         ☰
       </button>
-      <img src={logo} alt="Logo" className="logo" />
+      <img
+        src={logo}
+        alt="Logo"
+        className="logo"
+        onClick={handleLogoClick}
+        style={{ cursor: "pointer" }} // Make it clear it's clickable
+      />
       <input type="text" placeholder="Search..." className="search-box" />
       <div className="theme-toggle">
         <label className="toggle-switch">
