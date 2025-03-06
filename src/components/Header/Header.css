@@ -116,6 +116,12 @@ input:checked+.slider:before {
     transform: translateX(24px);
 }
 
+.user-icon {
+    min-width: 25px;
+    border-radius: 25%;
+    object-fit: cover;
+}
+
 @media (max-width: 600px) {
     .toggle-switch {
         width: 40px;

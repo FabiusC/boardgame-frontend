@@ -200,7 +200,9 @@ const Register: React.FC = () => {
                   key={index}
                   src={avatar.url}
                   alt={avatar.name}
-                  className={`avatar ${selectedAvatar === avatar.url ? "selected" : ""}`}
+                  className={`avatar ${
+                    selectedAvatar === avatar.url ? "selected" : ""
+                  }`}
                   onClick={() => handleAvatarSelect(avatar.url)}
                 />
               ))}

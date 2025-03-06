@@ -1,0 +1,197 @@
+.me-container {
+    max-width: 80%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    font-family: var(--font-family);
+    color: var(--text-color);
+    text-align: left;
+}
+
+/* Back Button */
+.back-button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.back-button:hover {
+    background-color: var(--primary-color);
+}
+
+/* Layout */
+.me-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    /* Ensure all columns stretch equally */
+    gap: 20px;
+    height: 90vh;
+    /* Full viewport height */
+}
+
+/* Friends & Invited Players Sections */
+.friends-section,
+.invited-section {
+    flex: 1;
+    background: var(--highlight-color);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    /* Ensures button stays at the bottom */
+    height: 80%;
+}
+
+.friends-list,
+.invited-list {
+    flex-grow: 1;
+    /* Ensures the list expands properly */
+    max-height: calc(100% - 60px);
+    /* Reserves space for the button */
+    overflow-y: auto;
+}
+
+/* Friend & Invited Player Cards */
+.friend-card,
+.invited-card {
+    background: var(--secondary-color);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    text-align: center;
+}
+
+/* User Card */
+.user-card {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 80%;
+    /* Centers content */
+    align-items: center;
+}
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+    margin: 10px 0;
+}
+
+/* Add Button at Bottom */
+.add-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin-top: auto;
+    /* Pushes button to the bottom */
+    align-self: center;
+}
+
+.add-button:hover {
+    background-color: var(--warning-color);
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.logout-button {
+    background-color: var(--warning-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.logout-button:hover {
+    background-color: red;
+}
+
+.edit-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.edit-button:hover {
+    background-color: var(--primary-color);
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.selected-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid var(--accent-color);
+    margin: 0 auto 20px;
+    transition: transform 0.3s, opacity 0.3s;
+    opacity: 1;
+}
+
+.selected-avatar:hover {
+    transform: scale(1.1);
+}
+
+.avatar {
+    transition: transform 0.2s, border 0.2s;
+}
+
+.avatar:hover {
+    transform: scale(1.1);
+}
+
+.avatar.selected {
+    border: 3px solid var(--highlight-color);
+    transform: scale(1.2);
+}
+
+.edit-input {
+    padding: 10px;
+    border: 1px solid var(--secondary-color);
+    min-width: 70%;
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    outline: none;
+    transition: border 0.3s;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import logo from "../../assets/icons/logo.svg";
@@ -15,9 +15,22 @@ const Header: React.FC<HeaderProps> = ({
   toggleDarkMode,
 }) => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userIcon, setUserIcon] = useState<string | null>(null);
 
-  const handleLoginClick = () => {
-    navigate("/login");
+  useEffect(() => {
+    // Check if user data exists in localStorage
+    const userData = localStorage.getItem("user");
+
+    if (userData) {
+      const user = JSON.parse(userData);
+      setIsLoggedIn(true);
+      setUserIcon(user.icon || "👤");
+    }
+  }, []);
+
+  const handleAuthClick = () => {
+    navigate(isLoggedIn ? "/me" : "/login");
   };
 
   const handleLogoClick = () => {
@@ -34,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({
         alt="Logo"
         className="logo"
         onClick={handleLogoClick}
-        style={{ cursor: "pointer" }} // Make it clear it's clickable
+        style={{ cursor: "pointer" }}
       />
       <input type="text" placeholder="Search..." className="search-box" />
       <div className="theme-toggle">
@@ -43,8 +56,14 @@ const Header: React.FC<HeaderProps> = ({
           <span className="slider"></span>
         </label>
       </div>
-      <button className="login-button" onClick={handleLoginClick}>
-        Log In
+
+      {/* Render user icon if logged in, otherwise show "Log In" */}
+      <button className="auth-button" onClick={handleAuthClick}>
+        {isLoggedIn ? (
+          <img src={userIcon!} alt="User Icon" className="user-icon" />
+        ) : (
+          "Log In"
+        )}
       </button>
     </header>
   );
